@@ -47,11 +47,25 @@
         android:layout_centerHorizontal="true"
         android:layout_centerVertical="true"
         >
+
+        <androidx.fragment.app.FragmentContainerView
+            android:id="@+id/fragmentContainerView"
+            android:name="com.dev.jtunao.demoapp_10.StoreBackFragment"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true" />
+
+    </RelativeLayout>
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:id="@+id/bottom_btn">
         <Button
             android:id="@+id/back_btn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
             android:text="Background" />
         <Button
             android:id="@+id/card_back_btn"
@@ -59,9 +73,7 @@
             android:layout_marginStart="15dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
             android:text="Card background" />
-
     </RelativeLayout>
 
 

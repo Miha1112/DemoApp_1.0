@@ -1,0 +1,28 @@
+{
+  "cards_bg": [
+      {
+        "name": "blue_back",
+        "is_bought": true,
+        "is_active": false,
+        "price": 500
+      },
+      {
+        "name": "red_back",
+        "is_bought": false,
+        "is_active": false,
+        "price": 1500
+      },
+      {
+        "name": "green_back",
+        "is_bought": false,
+        "is_active": false,
+        "price": 2500
+      },
+      {
+        "name": "yellow_back",
+        "is_bought": true,
+        "is_active": true,
+        "price": 5000
+      }
+    ]
+}

@@ -1,5 +1,6 @@
 package com.dev.jtunao.demoapp_10;
 
+import static com.dev.jtunao.demoapp_10.MainActivity.cardsBg;
 import static com.dev.jtunao.demoapp_10.MainActivity.total_score;
 
 import android.os.Bundle;
@@ -11,20 +12,13 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 
-/**
- * A simple {@link Fragment} subclass.
- * Use the {@link StoreBackFragment#newInstance} factory method to
- * create an instance of this fragment.
- */
 public class StoreBackFragment extends Fragment {
     private int score = total_score;
+    private Button[] btnArray = new Button[4];
 
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
 
-    // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
 
@@ -32,15 +26,6 @@ public class StoreBackFragment extends Fragment {
         // Required empty public constructor
     }
 
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment StoreBackFragment.
-     */
-    // TODO: Rename and change types and number of parameters
     public static StoreBackFragment newInstance(String param1, String param2) {
         StoreBackFragment fragment = new StoreBackFragment();
         Bundle args = new Bundle();
@@ -62,17 +47,32 @@ public class StoreBackFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_store_back, container, false);
-    }
+        View view = inflater.inflate(R.layout.fragment_store_back, container, false);
 
-    public void clickButtonBy(View view){
-        switch (view.getId()){
+        // Перенесення коду ініціалізації кнопок і текстів сюди
+        btnArray[0] = view.findViewById(R.id.by_first);
+        btnArray[1] = view.findViewById(R.id.by_sec);
+        btnArray[2] = view.findViewById(R.id.by_third);
+        btnArray[3] = view.findViewById(R.id.by_4);
 
-            case R.id.by_sec:
-                score -= 500;
-            break;
+        if (cardsBg != null && cardsBg.length > 0) {
+            for (int i = 0; i < cardsBg.length; i++) {
+                CardsBg cards = cardsBg[i];
+                Button btn = btnArray[i];
+                if (cards.getIs_active()) {
+                    btn.setText("Active");
+                } else if (cards.getIs_bought()) {
+                    btn.setText("Activated");
+                } else {
+                    btn.setText(Integer.toString(cards.getPrice()));
+                }
+            }
         }
 
+        return view;
+    }
+
+    public void clickButtonBy(View view) {
+        // Обробка кліку на кнопку
     }
 }

@@ -3,6 +3,8 @@ package com.dev.jtunao.demoapp_10;
 import static com.dev.jtunao.demoapp_10.MainActivity.total_score;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 
 import android.content.Intent;
 import android.os.Bundle;
