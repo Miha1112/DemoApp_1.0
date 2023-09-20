@@ -29,9 +29,9 @@ public class playActivity extends AppCompatActivity {
     private int index_click,index_chek;
     private int clicked_index,cheked_index = -1;
     private int remove_cnt = 0;
-    private Boolean isAnyCardClicked,isClickAll = false ;
+    private Boolean isAnyCardClicked = false ;
 
-    private Card[] cardsPlay = new Card[36];
+    private Card[] cardsPlay = new Card[24];
 
 
     private Integer[] cardsArr = {R.drawable.card_clubs_1,R.drawable.card_clubs_2,R.drawable.card_clubs_3
@@ -74,7 +74,7 @@ public class playActivity extends AppCompatActivity {
         }
         randomaizer(cardsArr,indexArr);
 
-        for (int j =0; j<36;j++){
+        for (int j =0; j<24;j++){
             cardsPlay[j] = new Card(cards[1][j],active_bg,cards[0][j]);
             cardsPlay[j].setMyImg(findViewById(imageViewsArr[j]));
         }
@@ -92,8 +92,8 @@ public class playActivity extends AppCompatActivity {
 
         }
         for (int o = 0; o<24;o++){
-            cards[0][o] = newCardsArr[position.nextInt(18)];
-            cards[1][o] = newInt[position.nextInt(18)];
+            cards[0][o] = newCardsArr[position.nextInt(12)];
+            cards[1][o] = newInt[position.nextInt(12)];
         }
     };
     public void backToMenu(){
@@ -124,7 +124,6 @@ public class playActivity extends AppCompatActivity {
     }
 
     public void clickOnCrad(View view){
-        if(!isClickAll) {
             if (!isAnyCardClicked) {
                 isAnyCardClicked = true;
                 for (int y = 0; y < cardsPlay.length; y++) {
@@ -136,7 +135,6 @@ public class playActivity extends AppCompatActivity {
                     }
                 }
             } else {
-                isClickAll = true;
                 for (int y = 0; y < cardsPlay.length; y++) {
                     if (cardsPlay[y].getMyImg().getId() == view.getId()) {
                         cheked_index = cardsPlay[y].getInd();
@@ -153,9 +151,6 @@ public class playActivity extends AppCompatActivity {
                     initTimer_wrong();
                 }
             }
-        }else {
-            //here must be a code if clicked more than 2 card in the same time, but i`m too lazy)))
-        }
     }
 
     private void initTimer_wrong(){
