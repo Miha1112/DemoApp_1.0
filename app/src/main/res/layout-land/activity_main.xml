@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".MainActivity">
+
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:id="@+id/center_nav_block"
+        android:layout_centerVertical="true">
+        <Button
+            android:id="@+id/play_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:onClick="goToMainGameScreen"
+            android:text="@string/play_txt"
+            android:textStyle="bold"
+            />
+        <Button
+            android:id="@+id/setting_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/setting_txt"
+            android:textAllCaps="false"
+            android:layout_below="@+id/play_btn"
+            android:layout_marginTop="10dp"
+            />
+        <Button
+            android:id="@+id/exit_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/exit_txt"
+            android:textStyle="normal"
+            android:textAllCaps="false"
+            android:layout_below="@+id/setting_btn"
+            android:layout_marginTop="10dp"
+            />
+    </RelativeLayout>
+    <RelativeLayout
+        android:id="@+id/store_bock"
+        android:layout_alignParentEnd="true"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/store_btn"
+            android:src="@drawable/baseline_store_24"
+            />
+
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/score_bock"
+        android:layout_alignParentStart="true"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+        <ImageView
+            android:id="@+id/coinView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:src="@drawable/money_coin"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:id="@+id/moneyScore"
+            android:layout_height="wrap_content"
+            android:layout_toEndOf="@+id/coinView"
+            android:text="10"
+            android:textSize="15pt"
+            />
+
+    </RelativeLayout>
+
+
+</RelativeLayout >

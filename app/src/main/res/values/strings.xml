@@ -1,0 +1,8 @@
+<resources>
+    <string name="app_name">DemoGame</string>
+    <string name="play_txt">Play</string>
+    <string name="setting_txt">Settings</string>
+    <string name="exit_txt">Exit</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+</resources>
