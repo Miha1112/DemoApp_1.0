@@ -15,7 +15,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:src="@drawable/menu"
-            android:onClick="backToMenu"/>
+            android:onClick="backToMenuPlay"/>
     </RelativeLayout>
     <RelativeLayout
         android:id="@+id/score_bock"

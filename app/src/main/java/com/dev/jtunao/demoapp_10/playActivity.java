@@ -1,6 +1,8 @@
 package com.dev.jtunao.demoapp_10;
 
 import static com.dev.jtunao.demoapp_10.MainActivity.active_bg;
+import static com.dev.jtunao.demoapp_10.MainActivity.card_count;
+import static com.dev.jtunao.demoapp_10.MainActivity.cardsBg;
 import static com.dev.jtunao.demoapp_10.MainActivity.total_score;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -9,6 +11,7 @@ import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.os.CountDownTimer;
+import android.text.BoringLayout;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
@@ -30,8 +33,9 @@ public class playActivity extends AppCompatActivity {
     private int clicked_index,cheked_index = -1;
     private int remove_cnt = 0;
     private Boolean isAnyCardClicked = false ;
+    private Boolean canClickFix = true;
 
-    private Card[] cardsPlay = new Card[24];
+    private Card[] cardsPlay = new Card[card_count];
 
 
     private Integer[] cardsArr = {R.drawable.card_clubs_1,R.drawable.card_clubs_2,R.drawable.card_clubs_3
@@ -56,13 +60,13 @@ public class playActivity extends AppCompatActivity {
             ,R.id.cards_17,R.id.cards_18,R.id.cards_19,R.id.cards_20,R.id.cards_21,R.id.cards_22,R.id.cards_23,R.id.cards_24};
     private  int[] indexArr = new int[52];
     private  int[] indexPlay = new int[36];
-    private Integer[] backArr = {R.drawable.card_back1,R.drawable.card_back2,R.drawable.card_back3,R.drawable.card_back4};
     private Integer[][] cards = new Integer[2][36];
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_play);
         init();
+        setBgCard();
     }
 
     private void init(){
@@ -73,57 +77,37 @@ public class playActivity extends AppCompatActivity {
             indexArr[l]=l;
         }
         randomaizer(cardsArr,indexArr);
+        System.out.println("active bg set: "+active_bg);
 
-        for (int j =0; j<24;j++){
+        for (int j =0; j<card_count;j++){
             cardsPlay[j] = new Card(cards[1][j],active_bg,cards[0][j]);
             cardsPlay[j].setMyImg(findViewById(imageViewsArr[j]));
         }
 
     }
     private void randomaizer(Integer[] integers, int[] ints){
-        Integer[] newCardsArr = new Integer[12];
-        int[] newInt = new int[12];
+        Integer[] newCardsArr = new Integer[card_count/2];
+        int[] newInt = new int[card_count/2];
         position = new Random();
-        for (int i = 0;i < 12;i++){
+        for (int i = 0;i < card_count/2;i++){
                newCardsArr[i] = integers[ThreadLocalRandom.current().nextInt(0,52)];
         }
-        for (int p = 0; p<12;p++){
+        for (int p = 0; p<card_count/2;p++){
             newInt[p] = ints[ThreadLocalRandom.current().nextInt(0,52)];
 
         }
-        for (int o = 0; o<24;o++){
-            cards[0][o] = newCardsArr[position.nextInt(12)];
-            cards[1][o] = newInt[position.nextInt(12)];
+        for (int o = 0; o<card_count;o++){
+            cards[0][o] = newCardsArr[position.nextInt(card_count/2)];
+            cards[1][o] = newInt[position.nextInt(card_count/2)];
         }
     };
-    public void backToMenu(){
-        saveMoney();
+    public void backToMenuPlay(){
         Intent intent = new Intent(this, MainActivity.class);
         startActivity(intent);
     }
 
-    private void saveMoney(){
-        try {
-            File file = new File(this.getExternalFilesDir(null), "results.txt");
-
-            if (!file.exists()) {
-                file.createNewFile();
-                System.out.println("FileSave" + " File created");
-            }
-
-            BufferedWriter writer = new BufferedWriter(new FileWriter(file, true));
-            writer.write("money_score" +  "," + total_score);
-            writer.newLine();
-            writer.close();
-            System.out.println("FileSave" + " File created");
-        } catch (IOException e) {
-            e.printStackTrace();
-            System.out.println("FileSave" + " error");
-        }
-
-    }
-
     public void clickOnCrad(View view){
+        if (canClickFix){
             if (!isAnyCardClicked) {
                 isAnyCardClicked = true;
                 for (int y = 0; y < cardsPlay.length; y++) {
@@ -135,6 +119,7 @@ public class playActivity extends AppCompatActivity {
                     }
                 }
             } else {
+                canClickFix = false;
                 for (int y = 0; y < cardsPlay.length; y++) {
                     if (cardsPlay[y].getMyImg().getId() == view.getId()) {
                         cheked_index = cardsPlay[y].getInd();
@@ -151,10 +136,14 @@ public class playActivity extends AppCompatActivity {
                     initTimer_wrong();
                 }
             }
+
+        }else {
+            //just bugfix things))))))))
+        }
     }
 
     private void initTimer_wrong(){
-        CountDownTimer timer = new CountDownTimer(2000,1000) {
+        CountDownTimer timer = new CountDownTimer(1000,500) {
             @Override
             public void onTick(long millisUntilFinished) {
 
@@ -169,7 +158,7 @@ public class playActivity extends AppCompatActivity {
 
     }
     private void initTimer_remove(){
-        CountDownTimer timer = new CountDownTimer(2000,1000) {
+        CountDownTimer timer = new CountDownTimer(1000,500) {
             @Override
             public void onTick(long millisUntilFinished) {
 
@@ -188,11 +177,14 @@ public class playActivity extends AppCompatActivity {
         total_score+=30;
         TextView textView =  findViewById(R.id.moneyScore);
         textView.setText(Integer.toString(total_score));
+        main_layout.removeView(findViewById(cardsPlay[index_click].getMyImg().getId()));
+        main_layout.removeView(findViewById(cardsPlay[index_chek].getMyImg().getId()));
         remove_cnt++;
         if (remove_cnt >= 17){
 
         }
         isAnyCardClicked = false;
+        canClickFix = true;
         clicked_index = -1;
         cheked_index = -1;
         index_click = -1;
@@ -204,9 +196,17 @@ public class playActivity extends AppCompatActivity {
         ImageView imageView2 = findViewById(cardsPlay[index_click].getMyImg().getId());
         imageView2.setImageResource(cardsPlay[index_click].getBack_img());
         isAnyCardClicked = false;
+        canClickFix = true;
         clicked_index = -1;
         cheked_index = -1;
         index_click = -1;
         index_chek = -1;
+    }
+
+    private void setBgCard(){
+        for (int i = 0; i < card_count;i++ ){
+            ImageView imageView = findViewById(cardsPlay[i].getMyImg().getId());
+            imageView.setImageResource(cardsPlay[i].getBack_img());
+        }
     }
 }

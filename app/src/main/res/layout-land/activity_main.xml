@@ -28,6 +28,7 @@
             android:textAllCaps="false"
             android:layout_below="@+id/play_btn"
             android:layout_marginTop="10dp"
+            android:onClick="goToSettings"
             />
         <Button
             android:id="@+id/exit_btn"
