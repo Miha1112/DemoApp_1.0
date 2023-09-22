@@ -13,6 +13,8 @@ import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.text.BoringLayout;
 import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -32,6 +34,7 @@ public class playActivity extends AppCompatActivity {
     private int index_click,index_chek;
     private int clicked_index,cheked_index = -1;
     private int remove_cnt = 0;
+    private int remove_card_cnt = 0;
     private Boolean isAnyCardClicked = false ;
     private Boolean canClickFix = true;
 
@@ -59,17 +62,35 @@ public class playActivity extends AppCompatActivity {
             ,R.id.cards_8,R.id.cards_9,R.id.cards_10,R.id.cards_11,R.id.cards_12,R.id.cards_13,R.id.cards_14,R.id.cards_15,R.id.cards_16
             ,R.id.cards_17,R.id.cards_18,R.id.cards_19,R.id.cards_20,R.id.cards_21,R.id.cards_22,R.id.cards_23,R.id.cards_24};
     private  int[] indexArr = new int[52];
-    private  int[] indexPlay = new int[36];
     private Integer[][] cards = new Integer[2][36];
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        requestWindowFeature(Window.FEATURE_NO_TITLE);
+        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
+                WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.activity_play);
         init();
         setBgCard();
+        getActiveCards();
     }
 
     private void init(){
+        ImageView img = findViewById(R.id.back_to_menu);
+        img.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                backToMenuPlay();
+            }
+        });
+
+        ImageView imgStore = findViewById(R.id.store_btn);
+        imgStore.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                goToStore();
+            }
+        });
         TextView textView = findViewById(R.id.moneyScore);
         textView.setText(Integer.toString(total_score));
         System.out.println(cardsArr.length);
@@ -105,6 +126,10 @@ public class playActivity extends AppCompatActivity {
         Intent intent = new Intent(this, MainActivity.class);
         startActivity(intent);
     }
+    public void goToStore(){
+        Intent intent = new Intent(this, storeActivity.class);
+        startActivity(intent);
+    }
 
     public void clickOnCrad(View view){
         if (canClickFix){
@@ -114,8 +139,10 @@ public class playActivity extends AppCompatActivity {
                     if (cardsPlay[y].getMyImg().getId() == view.getId()) {
                         clicked_index = cardsPlay[y].getInd();
                         ImageView imageView = findViewById(cardsPlay[y].getMyImg().getId());
-                        imageView.setImageResource(cardsPlay[y].getMain_img());
-                        index_click = y;
+                        if (imageView.getDrawable() != null) {
+                            imageView.setImageResource(cardsPlay[y].getMain_img());
+                            index_click = y;
+                        }
                     }
                 }
             } else {
@@ -124,8 +151,10 @@ public class playActivity extends AppCompatActivity {
                     if (cardsPlay[y].getMyImg().getId() == view.getId()) {
                         cheked_index = cardsPlay[y].getInd();
                         ImageView imageView = findViewById(cardsPlay[y].getMyImg().getId());
-                        imageView.setImageResource(cardsPlay[y].getMain_img());
-                        index_chek = y;
+                        if (imageView.getDrawable() != null) {
+                            imageView.setImageResource(cardsPlay[y].getMain_img());
+                            index_chek = y;
+                        }
                     }
                 }
                 if (cardsPlay[index_chek].getMain_img() == cardsPlay[index_click].getMain_img()) {
@@ -201,6 +230,22 @@ public class playActivity extends AppCompatActivity {
         cheked_index = -1;
         index_click = -1;
         index_chek = -1;
+    }
+    private void getActiveCards(){
+        System.out.println("try delete element");
+        remove_card_cnt = (imageViewsArr.length - 1) - (card_count - 1);
+        Integer[] layoutArr = {R.id.center_card_second,R.id.center_card};
+        int  k = 0;
+        for (int i = 0; i <remove_card_cnt;i++){
+            int o = imageViewsArr.length-(i+1);
+            if ( i != 0 && i % 8 == 0){
+                k++;
+            }
+            RelativeLayout layout = findViewById(layoutArr[k]);
+            System.out.println("delete count successful : " + i + " position in array: " + o);
+            ImageView img = findViewById(imageViewsArr[o]);
+            layout.removeView(img);
+        }
     }
 
     private void setBgCard(){

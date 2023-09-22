@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/default_bg"
     tools:context=".playActivity">
     <RelativeLayout
         android:layout_width="wrap_content"
@@ -15,12 +16,13 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:src="@drawable/menu"
-            android:onClick="backToMenuPlay"/>
+            android:id="@+id/back_to_menu"/>
     </RelativeLayout>
     <RelativeLayout
         android:id="@+id/score_bock"
         android:layout_toStartOf="@+id/store_bock"
         android:layout_marginEnd="50dp"
+        android:layout_marginTop="10dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content">
         <ImageView
@@ -42,6 +44,8 @@
     <RelativeLayout
         android:id="@+id/store_bock"
         android:layout_alignParentEnd="true"
+        android:layout_marginEnd="20dp"
+        android:layout_marginTop="10dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content">
 

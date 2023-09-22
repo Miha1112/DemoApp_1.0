@@ -18,6 +18,7 @@ import android.widget.Toast;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
+import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 
@@ -74,15 +75,15 @@ public class StoreBackFragment extends Fragment {
     private  final View.OnClickListener clickListener = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
-            System.out.println("click on btn");
+            //System.out.println("click on btn");
             // Обробка кліку на кнопку
             Button btn = getView().findViewById(v.getId());
             for (int o=0;o<cardsBg.length;o++){
                 if (btnArray[o]==btn){
-                    System.out.println("start chek");
+                    //System.out.println("start chek");
                     if(!cardsBg[o].getIs_bought()){
                         if (total_score > cardsBg[o].getPrice()){
-                            System.out.println("get price");
+                            //System.out.println("get price");
                             total_score-=cardsBg[o].getPrice();
                             cardsBg[o].setIs_bought(true);
                             for (int p = 0; p<cardsBg.length;p++){
@@ -95,14 +96,14 @@ public class StoreBackFragment extends Fragment {
                         }
                     }else {
                         if (!cardsBg[o].getIs_active()){
-                            System.out.println("get active");
+                            //System.out.println("get active");
                             for (int p = 0; p<cardsBg.length;p++){
                                 cardsBg[p].setIs_active(false);
                             }
-                            System.out.println("previous bg : "+ active_bg);
+                           // System.out.println("previous bg : "+ active_bg);
                             cardsBg[o].setIs_active(true);
                             active_bg = backArr[o];
-                            System.out.println("next bg set: "+active_bg);
+                           // System.out.println("next bg set: "+active_bg);
                         }
                     }
                     updBtnText();
@@ -112,13 +113,15 @@ public class StoreBackFragment extends Fragment {
         }
     };
     private void saveData(){
-        System.out.println("try save data");
+        String fileName = "card.json";
+        File file = new File(getActivity().getFilesDir(), fileName);
+       // System.out.println("try save data");
         GsonBuilder builder = new GsonBuilder();
         Gson gsonUpdate = builder.create();
         String jsonString = gsonUpdate.toJson(cardsBg);
-        try (FileWriter fileWriter = new FileWriter("cards.json")){
+        try (FileWriter fileWriter = new FileWriter(file)){
             fileWriter.write(jsonString);
-            System.out.println("data saved successful");
+           // System.out.println("data saved successful");
         }catch (IOException e){
             e.printStackTrace();
         }
