@@ -1,7 +1,10 @@
 package com.dev.jtunao.demoapp_10;
 
 import static com.dev.jtunao.demoapp_10.MainActivity.active_bg;
+import static com.dev.jtunao.demoapp_10.MainActivity.card_count;
 import static com.dev.jtunao.demoapp_10.MainActivity.cardsBg;
+import static com.dev.jtunao.demoapp_10.MainActivity.settings;
+import static com.dev.jtunao.demoapp_10.MainActivity.sound;
 import static com.dev.jtunao.demoapp_10.MainActivity.total_score;
 import static com.dev.jtunao.demoapp_10.MainActivity.backArr;
 
@@ -108,6 +111,7 @@ public class StoreBackFragment extends Fragment {
                     }
                     updBtnText();
                     saveData();
+                    saveSetting();
                 }
             }
         }
@@ -122,6 +126,21 @@ public class StoreBackFragment extends Fragment {
         try (FileWriter fileWriter = new FileWriter(file)){
             fileWriter.write(jsonString);
            // System.out.println("data saved successful");
+        }catch (IOException e){
+            e.printStackTrace();
+        }
+    }
+    private void saveSetting(){
+        String fileName = "setting.json";
+        File file = new File(getActivity().getFilesDir(), fileName);
+        settings.setCard_count(card_count);
+        settings.setMoney(total_score);
+        settings.setSound(sound);
+        GsonBuilder builderSetting = new GsonBuilder();
+        Gson gsonUpdateSetting = builderSetting.create();
+        String jsonStringSetting = gsonUpdateSetting.toJson(settings);
+        try (FileWriter fileWriter = new FileWriter(file)){
+            fileWriter.write(jsonStringSetting);
         }catch (IOException e){
             e.printStackTrace();
         }

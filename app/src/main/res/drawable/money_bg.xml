@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:id="@+id/rounded_rectangle">
+        <shape android:shape="rectangle">
+            <solid android:color="#9AC8C8C6" /> <!-- Цей параметр визначає колір фону -->
+            <corners android:radius="70dp" /> <!-- Цей параметр визначає радіус скруглення країв -->
+        </shape>
+    </item>
+</layer-list>

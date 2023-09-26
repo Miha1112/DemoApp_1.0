@@ -15,9 +15,11 @@ import android.text.BoringLayout;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 
 import com.dev.jtunao.demoapp_10.R;
@@ -63,6 +65,7 @@ public class playActivity extends AppCompatActivity {
             ,R.id.cards_17,R.id.cards_18,R.id.cards_19,R.id.cards_20,R.id.cards_21,R.id.cards_22,R.id.cards_23,R.id.cards_24};
     private  int[] indexArr = new int[52];
     private Integer[][] cards = new Integer[2][36];
+    private ImageView btn_regen;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -73,6 +76,15 @@ public class playActivity extends AppCompatActivity {
         init();
         setBgCard();
         getActiveCards();
+        btn_regen = findViewById(R.id.refresh_btn);
+        btn_regen.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                init();
+                setBgCard();
+            }
+        });
+
     }
 
     private void init(){
@@ -209,8 +221,10 @@ public class playActivity extends AppCompatActivity {
         main_layout.removeView(findViewById(cardsPlay[index_click].getMyImg().getId()));
         main_layout.removeView(findViewById(cardsPlay[index_chek].getMyImg().getId()));
         remove_cnt++;
-        if (remove_cnt >= 17){
-
+        if (remove_cnt >= card_count/2-3){//for infinity game
+            init();
+            setBgCard();
+            Toast.makeText(this,"Auto cards updated", Toast.LENGTH_SHORT).show();
         }
         isAnyCardClicked = false;
         canClickFix = true;

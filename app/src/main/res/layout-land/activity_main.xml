@@ -45,25 +45,28 @@
     <RelativeLayout
         android:id="@+id/store_bock"
         android:layout_alignParentEnd="true"
-        android:layout_marginEnd="20dp"
+        android:layout_marginEnd="10dp"
         android:layout_marginTop="10dp"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content">
+        android:background="@drawable/background_rectsngle"
+        android:layout_width="40dp"
+        android:layout_height="40dp">
 
         <ImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"
             android:id="@+id/store_btn"
-            android:onClick="goToStore"
-            android:src="@drawable/baseline_store_24"
+            android:src="@drawable/shop_cart"
             />
-
-
     </RelativeLayout>
 
     <RelativeLayout
         android:id="@+id/score_bock"
-        android:layout_alignParentStart="true"
+        android:layout_toStartOf="@+id/store_bock"
+        android:layout_marginEnd="30dp"
+        android:layout_marginTop="10dp"
+        android:background="@drawable/money_bg"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content">
         <ImageView
@@ -72,14 +75,15 @@
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
             android:src="@drawable/money_coin"/>
+
         <TextView
-            android:layout_width="wrap_content"
             android:id="@+id/moneyScore"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_toEndOf="@+id/coinView"
+            android:paddingRight="20dp"
             android:text="10"
-            android:textSize="15pt"
-            />
+            android:textSize="12pt" />
 
     </RelativeLayout>
 

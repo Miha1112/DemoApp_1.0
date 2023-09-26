@@ -44,11 +44,6 @@ public class SettingsActivity extends AppCompatActivity {
         setContentView(R.layout.activity_settings);
         init();
     }
-    public void backToMenuSettings(){
-        saveSetting();
-        Intent intent = new Intent(this, MainActivity.class);
-        startActivity(intent);
-    }
     private void saveSetting(){
         String fileName = "setting.json";
         File file = new File(getFilesDir(), fileName);
@@ -66,11 +61,11 @@ public class SettingsActivity extends AppCompatActivity {
     }
 
     private void init(){
-        ImageView img = findViewById(R.id.back_menu);
+        ImageView img = findViewById(R.id.back_to_menu);
         img.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                backToMenuSettings();
+                backToMenuSettings(v);
             }
         });
 
@@ -123,6 +118,11 @@ public class SettingsActivity extends AppCompatActivity {
             }
         });
 
+    }
+    public void backToMenuSettings(View v){
+        saveSetting();
+        Intent intent = new Intent(this, MainActivity.class);
+        startActivity(intent);
     }
 
 }

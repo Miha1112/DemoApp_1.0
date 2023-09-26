@@ -10,6 +10,7 @@ import android.text.BoringLayout;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -72,11 +73,18 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void init() {
-        TextView textView = findViewById(R.id.moneyScore);
-        textView.setText(Integer.toString(total_score));
         mediaPlayer = MediaPlayer.create(this,R.raw.def_snd);
+        ImageView store_btn  = findViewById(R.id.store_btn);
+        store_btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                goToStore(v);
+            }
+        });
         jsonParse();
         getSettings();
+        TextView textView = findViewById(R.id.moneyScore);
+        textView.setText(Integer.toString(total_score));
     }
 
     public void goToMainGameScreen(View view) {
