@@ -24,6 +24,7 @@
     </RelativeLayout>
     <RelativeLayout
         android:layout_width="wrap_content"
+        android:id="@+id/main_settings"
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
         android:layout_centerVertical="true">
@@ -47,5 +48,13 @@
             android:id="@+id/spinner"/>
 
     </RelativeLayout>
+
+    <Button
+        android:id="@+id/privacy"
+        android:layout_below="@+id/main_settings"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:text="Privacy Policy" />
 
 </RelativeLayout>

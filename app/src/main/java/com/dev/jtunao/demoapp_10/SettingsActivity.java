@@ -16,6 +16,7 @@ import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
+import android.widget.Button;
 import android.widget.CompoundButton;
 import android.widget.ImageView;
 import android.widget.Spinner;
@@ -62,10 +63,18 @@ public class SettingsActivity extends AppCompatActivity {
 
     private void init(){
         ImageView img = findViewById(R.id.back_to_menu);
+        Button privacy = findViewById(R.id.privacy);
         img.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 backToMenuSettings(v);
+            }
+        });
+
+        privacy.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                toPrivacy(v);
             }
         });
 
@@ -122,6 +131,10 @@ public class SettingsActivity extends AppCompatActivity {
     public void backToMenuSettings(View v){
         saveSetting();
         Intent intent = new Intent(this, MainActivity.class);
+        startActivity(intent);
+    }
+    public void toPrivacy(View v){
+        Intent intent = new Intent(this,privacy.class);
         startActivity(intent);
     }
 

@@ -13,9 +13,13 @@
         android:theme="@style/Theme.Design.NoActionBar"
         tools:targetApi="31">
         <activity
+            android:name=".privacy"
+            android:exported="false"
+            android:screenOrientation="landscape" />
+        <activity
             android:name=".SettingsActivity"
             android:exported="false"
-            android:screenOrientation="landscape"/>
+            android:screenOrientation="landscape" />
         <activity
             android:name=".storeActivity"
             android:exported="false"
