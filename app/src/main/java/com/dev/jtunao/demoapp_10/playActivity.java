@@ -23,6 +23,13 @@ import android.widget.Toast;
 
 
 import com.dev.jtunao.demoapp_10.R;
+import com.google.android.gms.ads.AdListener;
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.AdView;
+import com.google.android.gms.ads.LoadAdError;
+import com.google.android.gms.ads.MobileAds;
+import com.google.android.gms.ads.initialization.InitializationStatus;
+import com.google.android.gms.ads.initialization.OnInitializationCompleteListener;
 
 import java.io.BufferedWriter;
 import java.io.File;
@@ -34,6 +41,7 @@ import java.util.concurrent.ThreadLocalRandom;
 public class playActivity extends AppCompatActivity {
     private Random position;
     private int index_click,index_chek;
+    private AdView mAdView;
     private int clicked_index,cheked_index = -1;
     private int remove_cnt = 0;
     private int remove_card_cnt = 0;
@@ -88,6 +96,48 @@ public class playActivity extends AppCompatActivity {
     }
 
     private void init(){
+        MobileAds.initialize(this, new OnInitializationCompleteListener() {
+            @Override
+            public void onInitializationComplete(InitializationStatus initializationStatus) {
+            }
+        });
+        mAdView = findViewById(R.id.adView);
+        AdRequest adRequest = new AdRequest.Builder().build();
+        mAdView.loadAd(adRequest);
+        mAdView.setAdListener(new AdListener() {
+            @Override
+            public void onAdClicked() {
+                // Code to be executed when the user clicks on an ad.
+            }
+
+            @Override
+            public void onAdClosed() {
+                // Code to be executed when the user is about to return
+                // to the app after tapping on an ad.
+            }
+
+            @Override
+            public void onAdFailedToLoad(LoadAdError adError) {
+                System.out.println("ad failed to load with code: "+ adError);
+            }
+
+            @Override
+            public void onAdImpression() {
+                // Code to be executed when an impression is recorded
+                // for an ad.
+            }
+
+            @Override
+            public void onAdLoaded() {
+                System.out.println("ad successful load");
+            }
+
+            @Override
+            public void onAdOpened() {
+                // Code to be executed when an ad opens an overlay that
+                // covers the screen.
+            }
+        });
         ImageView img = findViewById(R.id.back_to_menu);
         img.setOnClickListener(new View.OnClickListener() {
             @Override
