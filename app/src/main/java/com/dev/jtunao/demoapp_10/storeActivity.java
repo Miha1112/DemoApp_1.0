@@ -2,6 +2,7 @@ package com.dev.jtunao.demoapp_10;
 
 import static com.dev.jtunao.demoapp_10.MainActivity.card_count;
 import static com.dev.jtunao.demoapp_10.MainActivity.cardsBg;
+import static com.dev.jtunao.demoapp_10.MainActivity.mediaPlayer;
 import static com.dev.jtunao.demoapp_10.MainActivity.settings;
 import static com.dev.jtunao.demoapp_10.MainActivity.sound;
 import static com.dev.jtunao.demoapp_10.MainActivity.total_score;
@@ -102,8 +103,6 @@ public class storeActivity extends AppCompatActivity {
     public void backToMenu(View view){
         saveData();
         saveSetting();
-        Intent intent = new Intent(this, MainActivity.class);
-        startActivity(intent);
         finish();
     }
     private void saveData(){

@@ -9,6 +9,7 @@ import static com.dev.jtunao.demoapp_10.MainActivity.total_score;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.view.View;
 import android.view.Window;
@@ -40,8 +41,10 @@ import java.sql.SQLOutput;
 public class SettingsActivity extends AppCompatActivity {
 
     Integer[] item = {24,12};
+    String[] sound_name = {"Neon gaming", "Novembers", "Stay Retro", "Strangers","Christmas","Main theme"};//in next versions
     Spinner spinner;
     ArrayAdapter<Integer> adapterItems;
+    ArrayAdapter<String> adapterItemsSound;
     private AdView mAdView;
 
     @Override
@@ -52,6 +55,10 @@ public class SettingsActivity extends AppCompatActivity {
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.activity_settings);
         init();
+    }
+    @Override
+    protected void onUserLeaveHint() {
+        super.onUserLeaveHint();
     }
     private void saveSetting(){
         String fileName = "setting.json";
@@ -145,11 +152,6 @@ public class SettingsActivity extends AppCompatActivity {
                 }
             }
         });
-
-
-
-
-
         adapterItems = new ArrayAdapter<>(this,R.layout.list_item,item);
         spinner = findViewById(R.id.spinner);
         spinner.setAdapter(adapterItems);
@@ -179,9 +181,6 @@ public class SettingsActivity extends AppCompatActivity {
 
     }
     public void backToMenuSettings(View v){
-        saveSetting();
-        Intent intent = new Intent(this, MainActivity.class);
-        startActivity(intent);
         finish();
     }
     public void toPrivacy(View v){

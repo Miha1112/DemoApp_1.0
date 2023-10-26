@@ -4,6 +4,7 @@ package com.dev.jtunao.demoapp_10;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.media.MediaPlayer;
 import android.os.Bundle;
@@ -129,17 +130,16 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onPause() {
         super.onPause();
-        mediaPlayer.pause();
     }
 
     @Override
     protected void onResume() {
         super.onResume();
-        mediaPlayer.start();
     }
 
     private void init() {
-        mediaPlayer = MediaPlayer.create(this,R.raw.def_snd);
+        mediaPlayer = MediaPlayer.create(this, R.raw.play_snd_neongaming);
+        mediaPlayer.setLooping(true);
         ImageView store_btn  = findViewById(R.id.store_btn);
         store_btn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -156,17 +156,14 @@ public class MainActivity extends AppCompatActivity {
     public void goToMainGameScreen(View view) {
         Intent intent = new Intent(this, playActivity.class);
         startActivity(intent);
-        finish();
     }
     public void goToStore(View view) {
         Intent intent = new Intent(this, storeActivity.class);
         startActivity(intent);
-        finish();
     }
     public void goToSettings(View view) {
         Intent intent = new Intent(this, SettingsActivity.class);
         startActivity(intent);
-        finish();
     }
 
     private void jsonParse() {
@@ -240,11 +237,13 @@ public class MainActivity extends AppCompatActivity {
                 Gson gson = new Gson();
                 settings = gson.fromJson(jsonSettingString, Settings.class);
                 //System.out.println(settings);
-                sound = settings.getSound();
-                if (sound){
-                    mediaPlayer.start();
-                }else {
-                    mediaPlayer.stop();
+                if (mediaPlayer.isPlaying()==false) {
+                    sound = settings.getSound();
+                    if (sound) {
+                        mediaPlayer.start();
+                    } else {
+                        mediaPlayer.stop();
+                    }
                 }
                 total_score = settings.getMoney();
                 card_count = settings.getCard_count();
@@ -263,11 +262,13 @@ public class MainActivity extends AppCompatActivity {
                 JsonElement jsonElement = jsonParser.parse(reader);
                 settings = gson.fromJson(jsonElement, Settings.class);
                 //System.out.println(settings);
-                sound = settings.getSound();
-                if (sound){
-                    mediaPlayer.start();
-                }else {
-                    mediaPlayer.stop();
+                if (mediaPlayer.isPlaying()==false) {
+                    sound = settings.getSound();
+                    if (sound) {
+                        mediaPlayer.start();
+                    } else {
+                        mediaPlayer.stop();
+                    }
                 }
                 total_score = settings.getMoney();
                 card_count = settings.getCard_count();
@@ -281,6 +282,7 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     protected void onDestroy() {
+        mediaPlayer.stop();
         super.onDestroy();
         GsonBuilder builder = new GsonBuilder();
         Gson gsonUpdate = builder.create();
