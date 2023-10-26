@@ -9,6 +9,7 @@ import static com.dev.jtunao.demoapp_10.MainActivity.total_score;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.content.pm.ActivityInfo;
 import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.view.View;
@@ -53,7 +54,11 @@ public class SettingsActivity extends AppCompatActivity {
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);
+        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
         setContentView(R.layout.activity_settings);
+        if (mediaPlayer.isPlaying()==false&&sound == true){
+            mediaPlayer.start();
+        }
         init();
     }
     @Override
@@ -155,6 +160,9 @@ public class SettingsActivity extends AppCompatActivity {
         adapterItems = new ArrayAdapter<>(this,R.layout.list_item,item);
         spinner = findViewById(R.id.spinner);
         spinner.setAdapter(adapterItems);
+        ArrayAdapter adapter = (ArrayAdapter) spinner.getAdapter();
+        int pos = adapter.getPosition(card_count);
+        spinner.setSelection(pos);
         spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
@@ -166,27 +174,31 @@ public class SettingsActivity extends AppCompatActivity {
 
             @Override
             public void onNothingSelected(AdapterView<?> parent) {
-                switch (settings.getCard_count()){
-                    case 24:
-                        System.out.println("selected 24" + settings.getCard_count());
-                        parent.setSelection(0);
-                    break;
-                    case 12:
-                        System.out.println("selected 12 "+ settings.getCard_count());
-                        parent.setSelection(1);
-                    break;
-                }
             }
         });
 
     }
     public void backToMenuSettings(View v){
+        saveSetting();
         finish();
     }
     public void toPrivacy(View v){
         Intent intent = new Intent(this,privacy.class);
         startActivity(intent);
         finish();
+    }
+    @Override
+    protected void onPause() {
+        super.onPause();
+        mediaPlayer.pause();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        if (mediaPlayer.isPlaying()== false && sound == true){
+            mediaPlayer.start();
+        }
     }
 
 }

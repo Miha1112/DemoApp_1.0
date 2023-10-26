@@ -11,6 +11,7 @@ import static com.dev.jtunao.demoapp_10.MainActivity.total_score;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.content.pm.ActivityInfo;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.os.CountDownTimer;
@@ -86,7 +87,11 @@ public class playActivity extends AppCompatActivity {
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);
+        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
         setContentView(R.layout.activity_play);
+        if (mediaPlayer.isPlaying()==false&&sound == true){
+            mediaPlayer.start();
+        }
         init();
         setBgCard();
         getActiveCards();
@@ -100,6 +105,19 @@ public class playActivity extends AppCompatActivity {
             }
         });
 
+    }
+    @Override
+    protected void onPause() {
+        super.onPause();
+        mediaPlayer.pause();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        if (mediaPlayer.isPlaying()== false && sound == true){
+            mediaPlayer.start();
+        }
     }
 
     private void init(){
@@ -198,7 +216,6 @@ public class playActivity extends AppCompatActivity {
         saveSetting();
         Intent intent = new Intent(this, storeActivity.class);
         startActivity(intent);
-        finish();
     }
 
     public void clickOnCrad(View view){
