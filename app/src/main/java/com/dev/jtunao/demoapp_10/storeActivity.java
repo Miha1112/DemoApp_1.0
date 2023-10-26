@@ -104,6 +104,7 @@ public class storeActivity extends AppCompatActivity {
         saveSetting();
         Intent intent = new Intent(this, MainActivity.class);
         startActivity(intent);
+        finish();
     }
     private void saveData(){
         String fileName = "card.json";

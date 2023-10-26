@@ -3,6 +3,8 @@ package com.dev.jtunao.demoapp_10;
 import static com.dev.jtunao.demoapp_10.MainActivity.active_bg;
 import static com.dev.jtunao.demoapp_10.MainActivity.card_count;
 import static com.dev.jtunao.demoapp_10.MainActivity.cardsBg;
+import static com.dev.jtunao.demoapp_10.MainActivity.settings;
+import static com.dev.jtunao.demoapp_10.MainActivity.sound;
 import static com.dev.jtunao.demoapp_10.MainActivity.total_score;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -30,6 +32,8 @@ import com.google.android.gms.ads.LoadAdError;
 import com.google.android.gms.ads.MobileAds;
 import com.google.android.gms.ads.initialization.InitializationStatus;
 import com.google.android.gms.ads.initialization.OnInitializationCompleteListener;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 
 import java.io.BufferedWriter;
 import java.io.File;
@@ -43,6 +47,7 @@ public class playActivity extends AppCompatActivity {
     private int index_click,index_chek;
     private AdView mAdView;
     private int clicked_index,cheked_index = -1;
+    private int rem_ind  = 3;//removed card index for auto update cards
     private int remove_cnt = 0;
     private int remove_card_cnt = 0;
     private Boolean isAnyCardClicked = false ;
@@ -88,6 +93,7 @@ public class playActivity extends AppCompatActivity {
         btn_regen.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                remove_cnt = 0;
                 init();
                 setBgCard();
             }
@@ -185,12 +191,16 @@ public class playActivity extends AppCompatActivity {
         }
     };
     public void backToMenuPlay(){
+        saveSetting();
         Intent intent = new Intent(this, MainActivity.class);
         startActivity(intent);
+        finish();
     }
     public void goToStore(){
+        saveSetting();
         Intent intent = new Intent(this, storeActivity.class);
         startActivity(intent);
+        finish();
     }
 
     public void clickOnCrad(View view){
@@ -271,7 +281,7 @@ public class playActivity extends AppCompatActivity {
         main_layout.removeView(findViewById(cardsPlay[index_click].getMyImg().getId()));
         main_layout.removeView(findViewById(cardsPlay[index_chek].getMyImg().getId()));
         remove_cnt++;
-        if (remove_cnt >= card_count/2-3){//for infinity game
+        if (remove_cnt >= card_count/2-(card_count/2)/4){//for infinity game, in next versions maybe add on/off to this fiches
             init();
             setBgCard();
             Toast.makeText(this,"Auto cards updated", Toast.LENGTH_SHORT).show();
@@ -309,6 +319,21 @@ public class playActivity extends AppCompatActivity {
             System.out.println("delete count successful : " + i + " position in array: " + o);
             ImageView img = findViewById(imageViewsArr[o]);
             layout.removeView(img);
+        }
+    }
+    private void saveSetting(){
+        String fileName = "setting.json";
+        File file = new File(getFilesDir(), fileName);
+        settings.setCard_count(card_count);
+        settings.setMoney(total_score);
+        settings.setSound(sound);
+        GsonBuilder builderSetting = new GsonBuilder();
+        Gson gsonUpdateSetting = builderSetting.create();
+        String jsonStringSetting = gsonUpdateSetting.toJson(settings);
+        try (FileWriter fileWriter = new FileWriter(file)){
+            fileWriter.write(jsonStringSetting);
+        }catch (IOException e){
+            e.printStackTrace();
         }
     }
 

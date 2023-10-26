@@ -11,6 +11,7 @@ import android.text.BoringLayout;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -24,6 +25,7 @@ import com.google.android.gms.ads.LoadAdError;
 import com.google.android.gms.ads.MobileAds;
 import com.google.android.gms.ads.initialization.InitializationStatus;
 import com.google.android.gms.ads.initialization.OnInitializationCompleteListener;
+import com.google.firebase.analytics.FirebaseAnalytics;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonArray;
@@ -42,11 +44,14 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.List;
+import java.util.Timer;
+import java.util.TimerTask;
 
 public class MainActivity extends AppCompatActivity {
     static CardsBg[] cardsBg;
     static int total_score = 50;
     static int active_bg = R.drawable.card_back1;
+    private FirebaseAnalytics firebaseAnalytics;
     static Integer[] backArr = {R.drawable.card_back1,R.drawable.card_back2,R.drawable.card_back3,R.drawable.card_back4};
 
 
@@ -67,22 +72,7 @@ public class MainActivity extends AppCompatActivity {
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.activity_main);
-        init();
-    }
-
-    @Override
-    protected void onPause() {
-        super.onPause();
-        mediaPlayer.pause();
-    }
-
-    @Override
-    protected void onResume() {
-        super.onResume();
-        mediaPlayer.start();
-    }
-
-    private void init() {
+        firebaseAnalytics = FirebaseAnalytics.getInstance(this);
         MobileAds.initialize(this, new OnInitializationCompleteListener() {
             @Override
             public void onInitializationComplete(InitializationStatus initializationStatus) {
@@ -125,8 +115,30 @@ public class MainActivity extends AppCompatActivity {
                 // covers the screen.
             }
         });
+        init();
 
+        Button exitBtn = findViewById(R.id.exit_btn);
+        exitBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
+    }
 
+    @Override
+    protected void onPause() {
+        super.onPause();
+        mediaPlayer.pause();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        mediaPlayer.start();
+    }
+
+    private void init() {
         mediaPlayer = MediaPlayer.create(this,R.raw.def_snd);
         ImageView store_btn  = findViewById(R.id.store_btn);
         store_btn.setOnClickListener(new View.OnClickListener() {
@@ -144,14 +156,17 @@ public class MainActivity extends AppCompatActivity {
     public void goToMainGameScreen(View view) {
         Intent intent = new Intent(this, playActivity.class);
         startActivity(intent);
+        finish();
     }
     public void goToStore(View view) {
         Intent intent = new Intent(this, storeActivity.class);
         startActivity(intent);
+        finish();
     }
     public void goToSettings(View view) {
         Intent intent = new Intent(this, SettingsActivity.class);
         startActivity(intent);
+        finish();
     }
 
     private void jsonParse() {

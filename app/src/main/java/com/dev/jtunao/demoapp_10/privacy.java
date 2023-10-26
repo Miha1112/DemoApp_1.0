@@ -35,6 +35,7 @@ public class privacy extends AppCompatActivity {
     public void backToMenu(View v){
         Intent intent = new Intent(this, MainActivity.class);
         startActivity(intent);
+        finish();
     }
 
 

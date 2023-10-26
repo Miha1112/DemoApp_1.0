@@ -182,10 +182,12 @@ public class SettingsActivity extends AppCompatActivity {
         saveSetting();
         Intent intent = new Intent(this, MainActivity.class);
         startActivity(intent);
+        finish();
     }
     public void toPrivacy(View v){
         Intent intent = new Intent(this,privacy.class);
         startActivity(intent);
+        finish();
     }
 
 }

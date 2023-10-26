@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">DemoGame</string>
+    <string name="app_name">Find match</string>
     <string name="play_txt">Play</string>
     <string name="setting_txt">Settings</string>
     <string name="exit_txt">Exit</string>
