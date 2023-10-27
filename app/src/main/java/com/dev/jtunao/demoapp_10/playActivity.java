@@ -3,7 +3,7 @@ package com.dev.jtunao.demoapp_10;
 import static com.dev.jtunao.demoapp_10.MainActivity.active_bg;
 import static com.dev.jtunao.demoapp_10.MainActivity.card_count;
 import static com.dev.jtunao.demoapp_10.MainActivity.cardsBg;
-import static com.dev.jtunao.demoapp_10.MainActivity.mediaPlayer;
+import static com.dev.jtunao.demoapp_10.MainActivity.main_snd;
 import static com.dev.jtunao.demoapp_10.MainActivity.settings;
 import static com.dev.jtunao.demoapp_10.MainActivity.sound;
 import static com.dev.jtunao.demoapp_10.MainActivity.total_score;
@@ -89,9 +89,6 @@ public class playActivity extends AppCompatActivity {
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
         setContentView(R.layout.activity_play);
-        if (mediaPlayer.isPlaying()==false&&sound == true){
-            mediaPlayer.start();
-        }
         init();
         setBgCard();
         getActiveCards();
@@ -109,14 +106,16 @@ public class playActivity extends AppCompatActivity {
     @Override
     protected void onPause() {
         super.onPause();
-        mediaPlayer.pause();
+        if (main_snd.isPlay()){
+            main_snd.pause();
+        }
     }
 
     @Override
     protected void onResume() {
         super.onResume();
-        if (mediaPlayer.isPlaying()== false && sound == true){
-            mediaPlayer.start();
+        if (!main_snd.isPlay()&&sound){
+            main_snd.play();
         }
     }
 

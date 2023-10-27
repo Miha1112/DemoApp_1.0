@@ -2,6 +2,7 @@ package com.dev.jtunao.demoapp_10;
 
 import static com.dev.jtunao.demoapp_10.MainActivity.card_count;
 import static com.dev.jtunao.demoapp_10.MainActivity.cardsBg;
+import static com.dev.jtunao.demoapp_10.MainActivity.main_snd;
 import static com.dev.jtunao.demoapp_10.MainActivity.mediaPlayer;
 import static com.dev.jtunao.demoapp_10.MainActivity.settings;
 import static com.dev.jtunao.demoapp_10.MainActivity.sound;
@@ -59,20 +60,19 @@ public class storeActivity extends AppCompatActivity {
     @Override
     protected void onPause() {
         super.onPause();
-        mediaPlayer.pause();
+        if (main_snd.isPlay()){
+            main_snd.pause();
+        }
     }
 
     @Override
     protected void onResume() {
         super.onResume();
-        if (mediaPlayer.isPlaying()== false && sound == true){
-            mediaPlayer.start();
+        if (!main_snd.isPlay()&&sound){
+            main_snd.play();
         }
     }
     private void  init(){
-        if (mediaPlayer.isPlaying()==false&&sound == true){
-            mediaPlayer.start();
-        }
         MobileAds.initialize(this, new OnInitializationCompleteListener() {
             @Override
             public void onInitializationComplete(InitializationStatus initializationStatus) {

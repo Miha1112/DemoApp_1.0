@@ -54,12 +54,15 @@ public class MainActivity extends AppCompatActivity {
     static int total_score = 50;
     static int active_bg = R.drawable.card_back1;
     private FirebaseAnalytics firebaseAnalytics;
+
     static Integer[] backArr = {R.drawable.card_back1,R.drawable.card_back2,R.drawable.card_back3,R.drawable.card_back4};
 
 
     static int card_count = 24;
     static Boolean sound = true;
     static MediaPlayer mediaPlayer;
+    static Integer main_snd_theme = R.raw.play_snd_neongaming;
+    static Snd_control main_snd = null;
 
     static Settings settings;
 
@@ -132,20 +135,20 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onPause() {
         super.onPause();
-        mediaPlayer.pause();
+        if (main_snd.isPlay()){
+            main_snd.pause();
+        }
     }
 
     @Override
     protected void onResume() {
         super.onResume();
-        if (mediaPlayer.isPlaying()== false && sound == true){
-            mediaPlayer.start();
+        if (!main_snd.isPlay()&&sound){
+            main_snd.play();
         }
     }
 
     private void init() {
-        mediaPlayer = MediaPlayer.create(this, R.raw.play_snd_neongaming);
-        mediaPlayer.setLooping(true);
         ImageView store_btn  = findViewById(R.id.store_btn);
         store_btn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -157,6 +160,18 @@ public class MainActivity extends AppCompatActivity {
         getSettings();
         TextView textView = findViewById(R.id.moneyScore);
         textView.setText(Integer.toString(total_score));
+        if (main_snd == null){
+            main_snd = new Snd_control(true,1,main_snd_theme,this);
+            if (sound){
+                main_snd.play();
+            }
+        }else {
+            if (sound){
+                main_snd.play();
+            }else {
+                main_snd.stop();
+            }
+        }
     }
 
     public void goToMainGameScreen(View view) {
@@ -243,16 +258,9 @@ public class MainActivity extends AppCompatActivity {
                 Gson gson = new Gson();
                 settings = gson.fromJson(jsonSettingString, Settings.class);
                 //System.out.println(settings);
-                if (mediaPlayer.isPlaying()==false) {
-                    sound = settings.getSound();
-                    if (sound) {
-                        mediaPlayer.start();
-                    } else {
-                        mediaPlayer.stop();
-                    }
-                }
                 total_score = settings.getMoney();
                 card_count = settings.getCard_count();
+                sound = settings.getSound();
             } catch (UnsupportedEncodingException ex) {
                 throw new RuntimeException(ex);
             } catch (IOException ex) {
@@ -268,16 +276,9 @@ public class MainActivity extends AppCompatActivity {
                 JsonElement jsonElement = jsonParser.parse(reader);
                 settings = gson.fromJson(jsonElement, Settings.class);
                 //System.out.println(settings);
-                if (mediaPlayer.isPlaying()==false) {
-                    sound = settings.getSound();
-                    if (sound) {
-                        mediaPlayer.start();
-                    } else {
-                        mediaPlayer.stop();
-                    }
-                }
                 total_score = settings.getMoney();
                 card_count = settings.getCard_count();
+                sound = settings.getSound();
                 System.out.println("setting loaded: "+ card_count + " " + total_score + " " + sound);
                 //System.out.println("load successful");
             } catch (IOException ex) {
@@ -288,7 +289,6 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     protected void onDestroy() {
-        mediaPlayer.stop();
         super.onDestroy();
         GsonBuilder builder = new GsonBuilder();
         Gson gsonUpdate = builder.create();

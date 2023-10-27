@@ -1,5 +1,6 @@
 package com.dev.jtunao.demoapp_10;
 
+import static com.dev.jtunao.demoapp_10.MainActivity.main_snd;
 import static com.dev.jtunao.demoapp_10.MainActivity.mediaPlayer;
 import static com.dev.jtunao.demoapp_10.MainActivity.sound;
 
@@ -29,28 +30,26 @@ public class privacy extends AppCompatActivity {
         ImageView menu_btn = findViewById(R.id.back_to_menu);
         WebView webView = findViewById(R.id.web_priv);
         webView.loadUrl("https://www.termsfeed.com/live/a9bf44c1-6aa7-4703-a273-59e12e108bb1");
-
         menu_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 backToMenu(v);
             }
         });
-        if (mediaPlayer.isPlaying()==false&&sound == true){
-            mediaPlayer.start();
-        }
     }
     @Override
     protected void onPause() {
         super.onPause();
-        mediaPlayer.pause();
+        if (main_snd.isPlay()){
+            main_snd.pause();
+        }
     }
 
     @Override
     protected void onResume() {
         super.onResume();
-        if (mediaPlayer.isPlaying()== false && sound == true){
-            mediaPlayer.start();
+        if (!main_snd.isPlay()&&sound){
+            main_snd.play();
         }
     }
     public void backToMenu(View v){
