@@ -1,5 +1,6 @@
 {
   "sound" : true,
   "money": 50,
-  "card_count": 24
+  "card_count": 24,
+  "sound_name": "Main theme"
 }

@@ -5,6 +5,8 @@ public class Settings {
     private int money;
     private int card_count;
 
+    private String sound_name;
+
     public Boolean getSound() {
         return sound;
     }
@@ -29,9 +31,18 @@ public class Settings {
         this.card_count = card_count;
     }
 
-    public Settings(Boolean sound, int money, int card_count) {
+    public String getSound_name() {
+        return sound_name;
+    }
+
+    public void setSound_name(String sound_name) {
+        this.sound_name = sound_name;
+    }
+
+    public Settings(Boolean sound, int money, int card_count, String sound_name) {
         this.sound = sound;
         this.money = money;
         this.card_count = card_count;
+        this.sound_name = sound_name;
     }
 }

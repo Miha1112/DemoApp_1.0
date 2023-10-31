@@ -4,6 +4,7 @@ import static com.dev.jtunao.demoapp_10.MainActivity.active_bg;
 import static com.dev.jtunao.demoapp_10.MainActivity.card_count;
 import static com.dev.jtunao.demoapp_10.MainActivity.cardsBg;
 import static com.dev.jtunao.demoapp_10.MainActivity.main_snd;
+import static com.dev.jtunao.demoapp_10.MainActivity.main_snd_theme;
 import static com.dev.jtunao.demoapp_10.MainActivity.settings;
 import static com.dev.jtunao.demoapp_10.MainActivity.sound;
 import static com.dev.jtunao.demoapp_10.MainActivity.total_score;
@@ -341,6 +342,7 @@ public class playActivity extends AppCompatActivity {
         settings.setCard_count(card_count);
         settings.setMoney(total_score);
         settings.setSound(sound);
+        settings.setSound_name(getMusicName(main_snd_theme));
         GsonBuilder builderSetting = new GsonBuilder();
         Gson gsonUpdateSetting = builderSetting.create();
         String jsonStringSetting = gsonUpdateSetting.toJson(settings);
@@ -356,5 +358,18 @@ public class playActivity extends AppCompatActivity {
             ImageView imageView = findViewById(cardsPlay[i].getMyImg().getId());
             imageView.setImageResource(cardsPlay[i].getBack_img());
         }
+    }
+    private String getMusicName(Integer music){
+        String name = "";
+        //{"Neon gaming", "Novembers", "Stay Retro", "Strangers","Christmas","Main theme"};//in next versions
+        switch (music){
+            case R.raw.def_snd: name = "Main theme"; break;
+            case R.raw.play_snd_neongaming: name = "Neon Gaming"; break;
+            case R.raw.play_snd_novembers: name = "Novembers"; break;
+            case R.raw.play_snd_stay_retro: name = "Stay Retro"; break;
+            case R.raw.play_snd_1: name = "Christmas"; break;
+            case R.raw.play_snd_stranger_things: name = "Strangers"; break;
+        }
+        return name;
     }
 }

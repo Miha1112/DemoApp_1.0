@@ -10,6 +10,7 @@ import static com.dev.jtunao.demoapp_10.MainActivity.total_score;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.media.MediaPlayer;
@@ -39,6 +40,7 @@ import com.google.gson.GsonBuilder;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.net.Inet4Address;
 import java.sql.SQLOutput;
 
 public class SettingsActivity extends AppCompatActivity {
@@ -70,6 +72,7 @@ public class SettingsActivity extends AppCompatActivity {
         settings.setCard_count(card_count);
         settings.setMoney(total_score);
         settings.setSound(sound);
+        settings.setSound_name(getMusicName(main_snd_theme));
         GsonBuilder builderSetting = new GsonBuilder();
         Gson gsonUpdateSetting = builderSetting.create();
         String jsonStringSetting = gsonUpdateSetting.toJson(settings);
@@ -139,6 +142,7 @@ public class SettingsActivity extends AppCompatActivity {
             }
         });
 
+
         //switch init
         Switch s = findViewById(R.id.switch_sound);
         s.setChecked(sound);
@@ -177,6 +181,66 @@ public class SettingsActivity extends AppCompatActivity {
             }
         });
 
+        // music spinner
+        adapterItemsSound = new ArrayAdapter<>(this,R.layout.list_item,sound_name);
+        Spinner music_spinner = findViewById(R.id.spinner_music);
+        music_spinner.setAdapter(adapterItemsSound);
+        String m_name = getMusicName(main_snd_theme);
+        ArrayAdapter adapter_music = (ArrayAdapter) music_spinner.getAdapter();
+        int pos_music = adapter_music.getPosition(m_name);
+        music_spinner.setSelection(pos_music);
+
+        music_spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                String name =(String) parent.getSelectedItem();
+                if (name != getMusicName(main_snd_theme)) {
+                    Integer set_music = getMusicIndex(name);
+                        setMusic(set_music);
+                }
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
+    }
+    private void setMusic(Integer music){
+        main_snd_theme = music;
+        main_snd.stop();
+        main_snd = new Snd_control(true,1,main_snd_theme,this);
+        saveSetting();
+        if (sound){
+            main_snd.play();
+        }
+    }
+
+    private String getMusicName(Integer music){
+        String name = "";
+        //{"Neon gaming", "Novembers", "Stay Retro", "Strangers","Christmas","Main theme"};//in next versions
+        switch (music){
+            case R.raw.def_snd: name = "Main theme"; break;
+            case R.raw.play_snd_neongaming: name = "Neon Gaming"; break;
+            case R.raw.play_snd_novembers: name = "Novembers"; break;
+            case R.raw.play_snd_stay_retro: name = "Stay Retro"; break;
+            case R.raw.play_snd_1: name = "Christmas"; break;
+            case R.raw.play_snd_stranger_things: name = "Strangers"; break;
+        }
+        return name;
+    }
+    private Integer getMusicIndex(String music){
+        Integer name = R.raw.def_snd;
+        //{"Neon gaming", "Novembers", "Stay Retro", "Strangers","Christmas","Main theme"};//in next versions
+        switch (music){
+            case "Main theme": name = R.raw.def_snd; break;
+            case "Neon Gaming": name = R.raw.play_snd_neongaming; break;
+            case "Novembers": name = R.raw.play_snd_novembers; break;
+            case "Stay Retro": name = R.raw.play_snd_stay_retro; break;
+            case "Christmas": name = R.raw.play_snd_1; break;
+            case "Strangers": name = R.raw.play_snd_stranger_things; break;
+        }
+        return name;
     }
     public void backToMenuSettings(View v){
         saveSetting();

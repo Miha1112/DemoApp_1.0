@@ -246,6 +246,7 @@ public class MainActivity extends AppCompatActivity {
 
     private void getSettings(){
         String fileName = "setting.json";
+        String music_name = "Main Theme";
         File file = new File(getFilesDir(),fileName);
         if (!file.exists()) {
             System.out.println("settings loading from default");
@@ -261,6 +262,11 @@ public class MainActivity extends AppCompatActivity {
                 total_score = settings.getMoney();
                 card_count = settings.getCard_count();
                 sound = settings.getSound();
+                music_name = settings.getSound_name();
+                if (music_name == null){
+                    music_name = "Main theme";
+                }
+                main_snd_theme = getMusicIndex(music_name);
             } catch (UnsupportedEncodingException ex) {
                 throw new RuntimeException(ex);
             } catch (IOException ex) {
@@ -279,6 +285,11 @@ public class MainActivity extends AppCompatActivity {
                 total_score = settings.getMoney();
                 card_count = settings.getCard_count();
                 sound = settings.getSound();
+                music_name = settings.getSound_name();
+                if (music_name == null){
+                    music_name = "Main theme";
+                }
+                main_snd_theme = getMusicIndex(music_name);
                 System.out.println("setting loaded: "+ card_count + " " + total_score + " " + sound);
                 //System.out.println("load successful");
             } catch (IOException ex) {
@@ -306,6 +317,7 @@ public class MainActivity extends AppCompatActivity {
         settings.setCard_count(card_count);
         settings.setMoney(total_score);
         settings.setSound(sound);
+        settings.setSound_name(getMusicName(main_snd_theme));
         GsonBuilder builderSetting = new GsonBuilder();
         Gson gsonUpdateSetting = builderSetting.create();
         String jsonStringSetting = gsonUpdateSetting.toJson(settings);
@@ -314,5 +326,31 @@ public class MainActivity extends AppCompatActivity {
         }catch (IOException e){
             e.printStackTrace();
         }
+    }
+    private Integer getMusicIndex(String music){
+        Integer name = R.raw.def_snd;
+        //{"Neon gaming", "Novembers", "Stay Retro", "Strangers","Christmas","Main theme"};//in next versions
+        switch (music){
+            case "Main theme": name = R.raw.def_snd; break;
+            case "Neon Gaming": name = R.raw.play_snd_neongaming; break;
+            case "Novembers": name = R.raw.play_snd_novembers; break;
+            case "Stay Retro": name = R.raw.play_snd_stay_retro; break;
+            case "Christmas": name = R.raw.play_snd_1; break;
+            case "Strangers": name = R.raw.play_snd_stranger_things; break;
+        }
+        return name;
+    }
+    private String getMusicName(Integer music){
+        String name = "";
+        //{"Neon gaming", "Novembers", "Stay Retro", "Strangers","Christmas","Main theme"};//in next versions
+        switch (music){
+            case R.raw.def_snd: name = "Main theme"; break;
+            case R.raw.play_snd_neongaming: name = "Neon Gaming"; break;
+            case R.raw.play_snd_novembers: name = "Novembers"; break;
+            case R.raw.play_snd_stay_retro: name = "Stay Retro"; break;
+            case R.raw.play_snd_1: name = "Christmas"; break;
+            case R.raw.play_snd_stranger_things: name = "Strangers"; break;
+        }
+        return name;
     }
 }

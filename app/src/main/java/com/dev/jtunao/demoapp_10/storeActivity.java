@@ -3,6 +3,7 @@ package com.dev.jtunao.demoapp_10;
 import static com.dev.jtunao.demoapp_10.MainActivity.card_count;
 import static com.dev.jtunao.demoapp_10.MainActivity.cardsBg;
 import static com.dev.jtunao.demoapp_10.MainActivity.main_snd;
+import static com.dev.jtunao.demoapp_10.MainActivity.main_snd_theme;
 import static com.dev.jtunao.demoapp_10.MainActivity.mediaPlayer;
 import static com.dev.jtunao.demoapp_10.MainActivity.settings;
 import static com.dev.jtunao.demoapp_10.MainActivity.sound;
@@ -143,6 +144,7 @@ public class storeActivity extends AppCompatActivity {
         settings.setCard_count(card_count);
         settings.setMoney(total_score);
         settings.setSound(sound);
+        settings.setSound_name(getMusicName(main_snd_theme));
         GsonBuilder builderSetting = new GsonBuilder();
         Gson gsonUpdateSetting = builderSetting.create();
         String jsonStringSetting = gsonUpdateSetting.toJson(settings);
@@ -151,5 +153,18 @@ public class storeActivity extends AppCompatActivity {
         }catch (IOException e){
             e.printStackTrace();
         }
+    }
+    private String getMusicName(Integer music){
+        String name = "";
+        //{"Neon gaming", "Novembers", "Stay Retro", "Strangers","Christmas","Main theme"};//in next versions
+        switch (music){
+            case R.raw.def_snd: name = "Main theme"; break;
+            case R.raw.play_snd_neongaming: name = "Neon Gaming"; break;
+            case R.raw.play_snd_novembers: name = "Novembers"; break;
+            case R.raw.play_snd_stay_retro: name = "Stay Retro"; break;
+            case R.raw.play_snd_1: name = "Christmas"; break;
+            case R.raw.play_snd_stranger_things: name = "Strangers"; break;
+        }
+        return name;
     }
 }
