@@ -1,5 +1,6 @@
 package com.dev.jtunao.demoapp_10;
 
+import static com.dev.jtunao.demoapp_10.MainActivity.main_bg;
 import static com.dev.jtunao.demoapp_10.MainActivity.main_snd;
 import static com.dev.jtunao.demoapp_10.MainActivity.mediaPlayer;
 import static com.dev.jtunao.demoapp_10.MainActivity.sound;
@@ -15,6 +16,7 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.webkit.WebView;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 public class privacy extends AppCompatActivity {
@@ -36,6 +38,9 @@ public class privacy extends AppCompatActivity {
                 backToMenu(v);
             }
         });
+
+        RelativeLayout layout = findViewById(R.id.main_layout_privacy);
+        layout.setBackgroundResource(main_bg);
     }
     @Override
     protected void onPause() {

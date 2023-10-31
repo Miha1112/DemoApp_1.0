@@ -5,6 +5,7 @@
     android:layout_width="match_parent"
     android:background="@drawable/default_bg"
     android:layout_height="match_parent"
+    android:id="@+id/main_layout_store"
     tools:context=".storeActivity">
 
     <RelativeLayout
@@ -59,8 +60,9 @@
         <androidx.fragment.app.FragmentContainerView
             android:id="@+id/fragmentContainerView"
             android:name="com.dev.jtunao.demoapp_10.StoreBackFragment"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="500dp"
+            android:layout_height="250dp"
+            android:background="#7F595959"
             android:layout_centerInParent="true" />
 
     </RelativeLayout>
@@ -75,6 +77,13 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Background" />
+        <Button
+            android:id="@+id/cards_btn"
+            android:layout_width="wrap_content"
+            android:layout_toEndOf="@+id/back_btn"
+            android:layout_marginLeft="15dp"
+            android:layout_height="wrap_content"
+            android:text="Cards" />
     </RelativeLayout>
     <com.google.android.gms.ads.AdView
         xmlns:ads="http://schemas.android.com/apk/res-auto"

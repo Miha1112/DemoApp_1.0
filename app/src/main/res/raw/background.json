@@ -1,0 +1,64 @@
+{
+  "background_img": [
+    {
+      "name": "default_bg",
+      "is_bought": true,
+      "is_active": true,
+      "price": 500
+    },
+    {
+      "name": "background_1",
+      "is_bought": false,
+      "is_active": false,
+      "price": 1500
+    },
+    {
+      "name": "background_2",
+      "is_bought": false,
+      "is_active": false,
+      "price": 2500
+    },
+    {
+      "name": "background_3",
+      "is_bought": false,
+      "is_active": false,
+      "price": 4600
+    },
+    {
+      "name": "background_4",
+      "is_bought": false,
+      "is_active": false,
+      "price": 5000
+    },
+    {
+      "name": "background_5",
+      "is_bought": false,
+      "is_active": false,
+      "price": 8000
+    },
+    {
+      "name": "background_6",
+      "is_bought": false,
+      "is_active": false,
+      "price": 10000
+    },
+    {
+      "name": "background_7",
+      "is_bought": false,
+      "is_active": false,
+      "price": 15000
+    },
+    {
+      "name": "background_8",
+      "is_bought": false,
+      "is_active": false,
+      "price": 16000
+    },
+    {
+      "name": "background_9",
+      "is_bought": false,
+      "is_active": false,
+      "price": 22000
+    }
+  ]
+}

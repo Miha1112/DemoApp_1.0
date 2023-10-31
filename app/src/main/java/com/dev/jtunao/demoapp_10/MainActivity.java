@@ -15,6 +15,7 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -51,8 +52,12 @@ import java.util.TimerTask;
 
 public class MainActivity extends AppCompatActivity {
     static CardsBg[] cardsBg;
-    static int total_score = 50;
+    public static BackgroundImg[] backgroundImg;
+    public static Integer[] background = {R.drawable.background_1,R.drawable.background_2,R.drawable.background_3,R.drawable.background_4,
+            R.drawable.background_5,R.drawable.background_6,R.drawable.background_7,R.drawable.background_8,R.drawable.background_9};
+    public static int total_score = 50;
     static int active_bg = R.drawable.card_back1;
+    public static Integer main_bg = R.drawable.default_bg;
     private FirebaseAnalytics firebaseAnalytics;
 
     static Integer[] backArr = {R.drawable.card_back1,R.drawable.card_back2,R.drawable.card_back3,R.drawable.card_back4};
@@ -130,6 +135,11 @@ public class MainActivity extends AppCompatActivity {
                 finish();
             }
         });
+
+        //get setup background images
+        getBackgroundImg();
+        RelativeLayout layout = findViewById(R.id.main_layout);
+        layout.setBackgroundResource(main_bg);
     }
 
     @Override
@@ -310,6 +320,7 @@ public class MainActivity extends AppCompatActivity {
             e.printStackTrace();
         }
         saveSetting();
+        saveBg();
     }
     private void saveSetting(){
         String fileName = "setting.json";
@@ -352,5 +363,77 @@ public class MainActivity extends AppCompatActivity {
             case R.raw.play_snd_stranger_things: name = "Strangers"; break;
         }
         return name;
+    }
+
+    private void getBackgroundImg(){
+        String fileName = "background.json";
+        File file = new File(getFilesDir(),fileName);
+        if (!file.exists()){
+            System.out.println("bg from default bg");
+            InputStream inputStream = getResources().openRawResource(R.raw.background);
+            try {
+                int size = inputStream.available();
+                byte[] buffer = new byte[size];
+                inputStream.read(buffer);
+                String jsonString = new String(buffer, "UTF-8");
+                JsonElement jsonElement = JsonParser.parseString(jsonString);
+                if (jsonElement.isJsonObject()) {
+                    System.out.println("first if");
+                    JsonObject jsonObject = jsonElement.getAsJsonObject();
+                    System.out.println("json object is: " + jsonObject);
+                    System.out.println("JSON chekers: " +jsonObject.has("background_img"));
+                    System.out.println("JSON chekers: " +jsonObject.get("background_img").isJsonArray());
+                    if (jsonObject.has("background_img") && jsonObject.get("background_img").isJsonArray()) {
+                        JsonArray jsonArray = jsonObject.getAsJsonArray("background_img");
+                        System.out.println("second if");
+                        Gson gson = new Gson();
+                        backgroundImg = gson.fromJson(jsonArray, BackgroundImg[].class);
+                        for (int o=0;o<backgroundImg.length;o++) {
+                            System.out.println("start chek bg");
+                            if (backgroundImg[o].getIs_active()) {
+                                main_bg = background[o];
+                            }
+                        }
+                        System.out.println("load successful 1");
+                    }
+                }
+            } catch (UnsupportedEncodingException ex) {
+                throw new RuntimeException(ex);
+            } catch (IOException ex) {
+                throw new RuntimeException(ex);
+            }
+        }else{
+            try {
+                System.out.println("load  bg from local files");
+                FileReader reader = new FileReader(file);
+                Gson gson = new Gson();
+                JsonParser jsonParser = new JsonParser();
+                JsonElement jsonElement = jsonParser.parse(reader);
+                System.out.println("is obj json : "+ jsonElement.isJsonArray());
+                backgroundImg = gson.fromJson(jsonElement, BackgroundImg[].class);
+                for (int o = 0; o < backgroundImg.length; o++) {
+                      System.out.println("start check bg");
+                    if (backgroundImg[o].getIs_active()) {
+                        main_bg = background[o];
+                    }
+                }
+                System.out.println("load successful");
+            } catch (IOException ex) {
+                throw new RuntimeException(ex);
+            }
+
+
+        }
+
+    }
+    private void saveBg(){
+        GsonBuilder builder = new GsonBuilder();
+        Gson gsonUpdate = builder.create();
+        String jsonString = gsonUpdate.toJson(backgroundImg);
+        try (FileWriter fileWriter = new FileWriter("background.json")){
+            fileWriter.write(jsonString);
+        }catch (IOException e){
+            e.printStackTrace();
+        }
     }
 }

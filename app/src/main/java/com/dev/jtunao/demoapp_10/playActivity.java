@@ -3,6 +3,7 @@ package com.dev.jtunao.demoapp_10;
 import static com.dev.jtunao.demoapp_10.MainActivity.active_bg;
 import static com.dev.jtunao.demoapp_10.MainActivity.card_count;
 import static com.dev.jtunao.demoapp_10.MainActivity.cardsBg;
+import static com.dev.jtunao.demoapp_10.MainActivity.main_bg;
 import static com.dev.jtunao.demoapp_10.MainActivity.main_snd;
 import static com.dev.jtunao.demoapp_10.MainActivity.main_snd_theme;
 import static com.dev.jtunao.demoapp_10.MainActivity.settings;
@@ -102,6 +103,8 @@ public class playActivity extends AppCompatActivity {
                 setBgCard();
             }
         });
+        RelativeLayout layout = findViewById(R.id.main_layout_play);
+        layout.setBackgroundResource(main_bg);
 
     }
     @Override

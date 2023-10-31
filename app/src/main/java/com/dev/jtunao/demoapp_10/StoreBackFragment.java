@@ -52,10 +52,6 @@ public class StoreBackFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
-        }
     }
 
     @Override
@@ -80,7 +76,7 @@ public class StoreBackFragment extends Fragment {
         @Override
         public void onClick(View v) {
             //System.out.println("click on btn");
-            // Обробка кліку на кнопку
+            // Обробка клікa на кнопку
             Button btn = getView().findViewById(v.getId());
             for (int o=0;o<cardsBg.length;o++){
                 if (btnArray[o]==btn){

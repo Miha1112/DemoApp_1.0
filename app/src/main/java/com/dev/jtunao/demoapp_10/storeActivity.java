@@ -1,7 +1,9 @@
 package com.dev.jtunao.demoapp_10;
 
+import static com.dev.jtunao.demoapp_10.MainActivity.backgroundImg;
 import static com.dev.jtunao.demoapp_10.MainActivity.card_count;
 import static com.dev.jtunao.demoapp_10.MainActivity.cardsBg;
+import static com.dev.jtunao.demoapp_10.MainActivity.main_bg;
 import static com.dev.jtunao.demoapp_10.MainActivity.main_snd;
 import static com.dev.jtunao.demoapp_10.MainActivity.main_snd_theme;
 import static com.dev.jtunao.demoapp_10.MainActivity.mediaPlayer;
@@ -10,6 +12,7 @@ import static com.dev.jtunao.demoapp_10.MainActivity.sound;
 import static com.dev.jtunao.demoapp_10.MainActivity.total_score;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
@@ -19,9 +22,12 @@ import android.os.Bundle;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.dev.jtunao.BackgroundFragment;
 import com.google.android.gms.ads.AdListener;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
@@ -41,6 +47,9 @@ public class storeActivity extends AppCompatActivity {
 
     private AdView mAdView;
 
+    private StoreBackFragment storeBackFragment = new StoreBackFragment();
+    private BackgroundFragment backgroundFragment = new BackgroundFragment();
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -57,6 +66,9 @@ public class storeActivity extends AppCompatActivity {
                 backToMenu(v);
             }
         });
+
+        RelativeLayout layout = findViewById(R.id.main_layout_store);
+        layout.setBackgroundResource(main_bg);
     }
     @Override
     protected void onPause() {
@@ -118,10 +130,32 @@ public class storeActivity extends AppCompatActivity {
         });
         TextView score = findViewById(R.id.moneyScore);
         score.setText(Integer.toString(total_score));
+
+        Button background_btn = findViewById(R.id.back_btn);
+        Button cards_btn = findViewById(R.id.cards_btn);
+        background_btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                setFragment(backgroundFragment);
+            }
+        });
+        cards_btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                setFragment(storeBackFragment);
+            }
+        });
+
+    }
+    private void setFragment(Fragment fragment){
+        FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
+        fragmentTransaction.replace(R.id.fragmentContainerView, fragment);
+        fragmentTransaction.commit();
     }
     public void backToMenu(View view){
         saveData();
         saveSetting();
+        saveDataBackground();
         finish();
     }
     private void saveData(){
@@ -131,6 +165,20 @@ public class storeActivity extends AppCompatActivity {
         GsonBuilder builder = new GsonBuilder();
         Gson gsonUpdate = builder.create();
         String jsonString = gsonUpdate.toJson(cardsBg);
+        try (FileWriter fileWriter = new FileWriter(file)){
+            fileWriter.write(jsonString);
+            // System.out.println("data saved successful");
+        }catch (IOException e){
+            e.printStackTrace();
+        }
+    }
+    private void saveDataBackground(){
+        String fileName = "background.json";
+        File file = new File(getFilesDir(), fileName);
+        // System.out.println("try save data");
+        GsonBuilder builder = new GsonBuilder();
+        Gson gsonUpdate = builder.create();
+        String jsonString = gsonUpdate.toJson(backgroundImg);
         try (FileWriter fileWriter = new FileWriter(file)){
             fileWriter.write(jsonString);
             // System.out.println("data saved successful");

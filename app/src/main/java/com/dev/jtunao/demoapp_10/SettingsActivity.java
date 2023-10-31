@@ -1,6 +1,7 @@
 package com.dev.jtunao.demoapp_10;
 
 import static com.dev.jtunao.demoapp_10.MainActivity.card_count;
+import static com.dev.jtunao.demoapp_10.MainActivity.main_bg;
 import static com.dev.jtunao.demoapp_10.MainActivity.main_snd;
 import static com.dev.jtunao.demoapp_10.MainActivity.main_snd_theme;
 import static com.dev.jtunao.demoapp_10.MainActivity.mediaPlayer;
@@ -24,6 +25,7 @@ import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.CompoundButton;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.Spinner;
 import android.widget.Switch;
 
@@ -61,6 +63,9 @@ public class SettingsActivity extends AppCompatActivity {
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
         setContentView(R.layout.activity_settings);
         init();
+
+        RelativeLayout layout = findViewById(R.id.main_layout_setting);
+        layout.setBackgroundResource(main_bg);
     }
     @Override
     protected void onUserLeaveHint() {
