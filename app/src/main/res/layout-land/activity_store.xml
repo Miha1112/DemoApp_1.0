@@ -76,11 +76,21 @@
             android:id="@+id/back_btn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:background="@drawable/btn_bg"
             android:text="Background" />
         <Button
             android:id="@+id/cards_btn"
+            android:background="@drawable/btn_bg"
             android:layout_width="wrap_content"
             android:layout_toEndOf="@+id/back_btn"
+            android:layout_marginLeft="15dp"
+            android:layout_height="wrap_content"
+            android:text="backside" />
+        <Button
+            android:id="@+id/cards_change_btn"
+            android:background="@drawable/btn_bg"
+            android:layout_width="wrap_content"
+            android:layout_toEndOf="@+id/cards_btn"
             android:layout_marginLeft="15dp"
             android:layout_height="wrap_content"
             android:text="Cards" />

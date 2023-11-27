@@ -58,9 +58,10 @@ public class MainActivity extends AppCompatActivity {
     public static int total_score = 50;
     static int active_bg = R.drawable.card_back1;
     public static Integer main_bg = R.drawable.default_bg;
+    public static int cardArrAct = 1;
     private FirebaseAnalytics firebaseAnalytics;
 
-    static Integer[] backArr = {R.drawable.card_back1,R.drawable.card_back2,R.drawable.card_back3,R.drawable.card_back4};
+    static Integer[] backArr = {R.drawable.card_back1,R.drawable.card_back2,R.drawable.card_back3,R.drawable.card_back4,R.drawable.new_cards_bg_2r};
 
 
     static int card_count = 24;
@@ -272,6 +273,7 @@ public class MainActivity extends AppCompatActivity {
                 total_score = settings.getMoney();
                 card_count = settings.getCard_count();
                 sound = settings.getSound();
+                cardArrAct = settings.getActivated_card();
                 music_name = settings.getSound_name();
                 if (music_name == null){
                     music_name = "Main theme";
@@ -329,6 +331,7 @@ public class MainActivity extends AppCompatActivity {
         settings.setMoney(total_score);
         settings.setSound(sound);
         settings.setSound_name(getMusicName(main_snd_theme));
+        settings.setActivated_card(cardArrAct);
         GsonBuilder builderSetting = new GsonBuilder();
         Gson gsonUpdateSetting = builderSetting.create();
         String jsonStringSetting = gsonUpdateSetting.toJson(settings);

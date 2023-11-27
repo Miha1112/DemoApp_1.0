@@ -1,5 +1,6 @@
 package com.dev.jtunao.demoapp_10;
 
+import static com.dev.jtunao.demoapp_10.MainActivity.cardArrAct;
 import static com.dev.jtunao.demoapp_10.MainActivity.card_count;
 import static com.dev.jtunao.demoapp_10.MainActivity.main_bg;
 import static com.dev.jtunao.demoapp_10.MainActivity.main_snd;
@@ -78,6 +79,7 @@ public class SettingsActivity extends AppCompatActivity {
         settings.setMoney(total_score);
         settings.setSound(sound);
         settings.setSound_name(getMusicName(main_snd_theme));
+        settings.setActivated_card(cardArrAct);
         GsonBuilder builderSetting = new GsonBuilder();
         Gson gsonUpdateSetting = builderSetting.create();
         String jsonStringSetting = gsonUpdateSetting.toJson(settings);

@@ -23,6 +23,12 @@
         "is_bought": false,
         "is_active": false,
         "price": 5000
+      },
+      {
+        "name": "blue_custom` _back",
+        "is_bought": false,
+        "is_active": false,
+        "price": 5750
       }
     ]
 }

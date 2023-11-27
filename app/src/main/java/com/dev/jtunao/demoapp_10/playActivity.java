@@ -1,6 +1,7 @@
 package com.dev.jtunao.demoapp_10;
 
 import static com.dev.jtunao.demoapp_10.MainActivity.active_bg;
+import static com.dev.jtunao.demoapp_10.MainActivity.cardArrAct;
 import static com.dev.jtunao.demoapp_10.MainActivity.card_count;
 import static com.dev.jtunao.demoapp_10.MainActivity.cardsBg;
 import static com.dev.jtunao.demoapp_10.MainActivity.main_bg;
@@ -47,6 +48,7 @@ import java.util.Random;
 import java.util.concurrent.ThreadLocalRandom;
 
 public class playActivity extends AppCompatActivity {
+    // TODO зробити генерацію в магазині фонів процедурно з коду а не ручками
     private Random position;
     private int index_click,index_chek;
     private AdView mAdView;
@@ -76,6 +78,7 @@ public class playActivity extends AppCompatActivity {
             ,R.drawable.card_spades_3,R.drawable.card_spades_4,R.drawable.card_spades_5,R.drawable.card_spades_6
             ,R.drawable.card_spades_7,R.drawable.card_spades_8,R.drawable.card_spades_9,R.drawable.card_spades_10
             ,R.drawable.card_spades_11,R.drawable.card_spades_12,R.drawable.card_spades_13};
+    private Integer[] newCardsArr = {R.drawable.image_cards_1,R.drawable.image_cards_2,R.drawable.image_cards_3,R.drawable.image_cards_4,R.drawable.image_cards_5,R.drawable.image_cards_6,R.drawable.image_cards_7,R.drawable.image_cards_8,R.drawable.image_cards_9,R.drawable.image_cards_10,R.drawable.image_cards_11,R.drawable.image_cards_12,R.drawable.image_cards_13,R.drawable.image_cards_14,R.drawable.image_cards_15,R.drawable.image_cards_16,R.drawable.image_cards_17,R.drawable.image_cards_18,R.drawable.image_cards_19,R.drawable.image_cards_20,R.drawable.image_cards_21,R.drawable.image_cards_22,R.drawable.image_cards_23,R.drawable.image_cards_24,R.drawable.image_cards_25,R.drawable.image_cards_26,R.drawable.image_cards_27,R.drawable.image_cards_28,R.drawable.image_cards_29,R.drawable.image_cards_30,R.drawable.image_cards_31,R.drawable.image_cards_32,R.drawable.image_cards_33,R.drawable.image_cards_34,R.drawable.image_cards_35,R.drawable.image_cards_36,R.drawable.image_cards_37,R.drawable.image_cards_38,R.drawable.image_cards_39,R.drawable.image_cards_40,R.drawable.image_cards_41,R.drawable.image_cards_42,R.drawable.image_cards_43,R.drawable.image_cards_44,R.drawable.image_cards_45,R.drawable.image_cards_46,R.drawable.image_cards_47,R.drawable.image_cards_48,R.drawable.image_cards_49,R.drawable.image_cards_50,R.drawable.image_cards_51,R.drawable.image_cards_52,R.drawable.image_cards_53,R.drawable.image_cards_54,R.drawable.image_cards_55,R.drawable.image_cards_56,R.drawable.image_cards_57,R.drawable.image_cards_58,R.drawable.image_cards_59,R.drawable.image_cards_60};
 
     private Integer[] imageViewsArr = {R.id.cards_1,R.id.cards_2,R.id.cards_3,R.id.cards_4,R.id.cards_5,R.id.cards_6,R.id.cards_7
             ,R.id.cards_8,R.id.cards_9,R.id.cards_10,R.id.cards_11,R.id.cards_12,R.id.cards_13,R.id.cards_14,R.id.cards_15,R.id.cards_16
@@ -129,6 +132,9 @@ public class playActivity extends AppCompatActivity {
             public void onInitializationComplete(InitializationStatus initializationStatus) {
             }
         });
+        if (cardArrAct == 2){
+            cardsArr = newCardsArr;
+        }
         mAdView = findViewById(R.id.adView);
         AdRequest adRequest = new AdRequest.Builder().build();
         mAdView.loadAd(adRequest);
@@ -183,13 +189,10 @@ public class playActivity extends AppCompatActivity {
         });
         TextView textView = findViewById(R.id.moneyScore);
         textView.setText(Integer.toString(total_score));
-        System.out.println(cardsArr.length);
         for(int l = 0;l<52;l++){
             indexArr[l]=l;
         }
         randomaizer(cardsArr,indexArr);
-        System.out.println("active bg set: "+active_bg);
-
         for (int j =0; j<card_count;j++){
             cardsPlay[j] = new Card(cards[1][j],active_bg,cards[0][j]);
             cardsPlay[j].setMyImg(findViewById(imageViewsArr[j]));
@@ -346,6 +349,7 @@ public class playActivity extends AppCompatActivity {
         settings.setMoney(total_score);
         settings.setSound(sound);
         settings.setSound_name(getMusicName(main_snd_theme));
+        settings.setActivated_card(cardArrAct);
         GsonBuilder builderSetting = new GsonBuilder();
         Gson gsonUpdateSetting = builderSetting.create();
         String jsonStringSetting = gsonUpdateSetting.toJson(settings);

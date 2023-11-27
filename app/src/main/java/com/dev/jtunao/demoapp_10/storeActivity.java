@@ -49,6 +49,7 @@ public class storeActivity extends AppCompatActivity {
 
     private StoreBackFragment storeBackFragment = new StoreBackFragment();
     private BackgroundFragment backgroundFragment = new BackgroundFragment();
+    private CardsFragment cardsFragment = new CardsFragment();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -132,17 +133,24 @@ public class storeActivity extends AppCompatActivity {
         score.setText(Integer.toString(total_score));
 
         Button background_btn = findViewById(R.id.back_btn);
-        Button cards_btn = findViewById(R.id.cards_btn);
+        Button backside_cards_btn = findViewById(R.id.cards_btn);
+        Button cards_btn = findViewById(R.id.cards_change_btn);
         background_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 setFragment(backgroundFragment);
             }
         });
-        cards_btn.setOnClickListener(new View.OnClickListener() {
+        backside_cards_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 setFragment(storeBackFragment);
+            }
+        });
+        cards_btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                setFragment(cardsFragment);
             }
         });
 

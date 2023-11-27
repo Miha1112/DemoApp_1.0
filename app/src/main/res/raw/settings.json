@@ -2,5 +2,6 @@
   "sound" : true,
   "money": 50,
   "card_count": 24,
-  "sound_name": "Main theme"
+  "sound_name": "Main theme",
+  "activated_card": 1
 }

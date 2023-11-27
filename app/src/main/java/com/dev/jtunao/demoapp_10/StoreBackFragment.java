@@ -1,6 +1,7 @@
 package com.dev.jtunao.demoapp_10;
 
 import static com.dev.jtunao.demoapp_10.MainActivity.active_bg;
+import static com.dev.jtunao.demoapp_10.MainActivity.cardArrAct;
 import static com.dev.jtunao.demoapp_10.MainActivity.card_count;
 import static com.dev.jtunao.demoapp_10.MainActivity.cardsBg;
 import static com.dev.jtunao.demoapp_10.MainActivity.main_snd_theme;
@@ -28,7 +29,7 @@ import java.io.IOException;
 
 public class StoreBackFragment extends Fragment {
     private int score = total_score;
-    private Button[] btnArray = new Button[4];
+    private Button[] btnArray = new Button[5];
 
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
@@ -62,11 +63,13 @@ public class StoreBackFragment extends Fragment {
         btnArray[1] = view.findViewById(R.id.by_sec);
         btnArray[2] = view.findViewById(R.id.by_third);
         btnArray[3] = view.findViewById(R.id.by_4);
+        btnArray[4] = view.findViewById(R.id.by_5);
 
         btnArray[0].setOnClickListener(clickListener);
         btnArray[1].setOnClickListener(clickListener);
         btnArray[2].setOnClickListener(clickListener);
         btnArray[3].setOnClickListener(clickListener);
+        btnArray[4].setOnClickListener(clickListener);
 
         updBtnText();
 
@@ -134,6 +137,7 @@ public class StoreBackFragment extends Fragment {
         settings.setMoney(total_score);
         settings.setSound(sound);
         settings.setSound_name(getMusicName(main_snd_theme));
+        settings.setActivated_card(cardArrAct);
         GsonBuilder builderSetting = new GsonBuilder();
         Gson gsonUpdateSetting = builderSetting.create();
         String jsonStringSetting = gsonUpdateSetting.toJson(settings);
